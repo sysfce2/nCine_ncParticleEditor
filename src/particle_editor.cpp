@@ -122,7 +122,7 @@ void MyEventHandler::onInit()
 	const LuaLoader::Config &luaConfig = loader_->config();
 	if (luaConfig.startupScriptName.isEmpty() == false)
 	{
-		const nctl::String startupScript = luaConfig.scriptsPath + luaConfig.startupScriptName;
+		const nctl::String startupScript = nc::fs::joinPath(luaConfig.scriptsPath, luaConfig.startupScriptName);
 		if (nc::fs::isReadableFile(startupScript.data()))
 		{
 			load(startupScript.data());
@@ -643,7 +643,7 @@ void MyEventHandler::createParticleSystem(unsigned int index)
 {
 	ParticleSystemGuiState &s = sysStates_[index];
 
-	nc::Texture *texture = textures_[texIndex_].get();
+	nc::Texture *texture = s.texture;
 	const nc::Recti texRect(0, 0, texture->width(), texture->height());
 	FATAL_ASSERT(index == particleSystems_.size());
 	particleSystems_.pushBack(nctl::makeUnique<nc::ParticleSystem>(dummy_.get(), unsigned(s.numParticles), texture, texRect));

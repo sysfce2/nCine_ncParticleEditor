@@ -193,7 +193,6 @@ void MyEventHandler::createGuiMenus()
 				{
 					recentFileIndexStart_ = 0;
 					recentFileIndexEnd_ = 0;
-					recentFilenames_.clear();
 				}
 
 				ImGui::EndMenu();

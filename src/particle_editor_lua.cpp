@@ -288,8 +288,8 @@ bool LuaLoader::loadConfig(const char *filename, const nc::EmscriptenLocalFile *
 				nc::LuaUtils::tryRetrieveField<float>(L, -1, CfgNames::maxBackgroundImageScale, config_.maxBackgroundImageScale);
 				nc::LuaUtils::tryRetrieveField<int32_t>(L, -1, CfgNames::maxRenderingLayer, config_.maxRenderingLayer);
 			}
+			nc::LuaUtils::pop(L);
 		}
-		nc::LuaUtils::pop(L);
 	}
 
 	if (version >= 7)
@@ -302,8 +302,8 @@ bool LuaLoader::loadConfig(const char *filename, const nc::EmscriptenLocalFile *
 			nc::LuaUtils::tryRetrieveField<bool>(L, -1, CfgNames::frameBorder, config_.frameBorder);
 			nc::LuaUtils::tryRetrieveField<bool>(L, -1, CfgNames::popupBorder, config_.popupBorder);
 			nc::LuaUtils::tryRetrieveField<float>(L, -1, CfgNames::scaling, config_.scaling);
+			nc::LuaUtils::pop(L);
 		}
-		nc::LuaUtils::pop(L);
 	}
 
 	sanitizeInitValues();
@@ -421,8 +421,10 @@ bool LuaLoader::load(const char *filename, State &state, const nc::EmscriptenLoc
 
 	state.normalizedAbsPosition = nc::Vector2f(0.5f, 0.5f); // center of the screen as default
 	if (nc::LuaUtils::tryRetrieveGlobalTable(L, Names::normalizedAbsPosition))
+	{
 		state.normalizedAbsPosition = nc::LuaVector2fUtils::retrieveTable(L, -1);
-	nc::LuaUtils::pop(L);
+		nc::LuaUtils::pop(L);
+	}
 
 	state.background.color = nc::Colorf::Black; // black background as default
 	state.background.imageNormalizedPosition = nc::Vector2f(0.5f, 0.5f); // center of the screen as default
@@ -528,8 +530,8 @@ bool LuaLoader::load(const char *filename, State &state, const nc::EmscriptenLoc
 				nc::LuaUtils::pop(L);
 				s.colorSteps.pushBack(step);
 			}
+			nc::LuaUtils::pop(L);
 		}
-		nc::LuaUtils::pop(L);
 
 		s.sizeStepBaseScale = nc::Vector2f(1.0f, 1.0f); // default if no size steps are found
 		if (nc::LuaUtils::tryRetrieveFieldTable(L, -1, Names::sizeSteps))
@@ -565,8 +567,8 @@ bool LuaLoader::load(const char *filename, State &state, const nc::EmscriptenLoc
 				nc::LuaUtils::pop(L);
 				s.sizeSteps.pushBack(step);
 			}
+			nc::LuaUtils::pop(L);
 		}
-		nc::LuaUtils::pop(L);
 
 		if (nc::LuaUtils::tryRetrieveFieldTable(L, -1, Names::rotationSteps))
 		{
@@ -587,8 +589,8 @@ bool LuaLoader::load(const char *filename, State &state, const nc::EmscriptenLoc
 				nc::LuaUtils::pop(L);
 				s.rotationSteps.pushBack(step);
 			}
+			nc::LuaUtils::pop(L);
 		}
-		nc::LuaUtils::pop(L);
 
 		if (nc::LuaUtils::tryRetrieveFieldTable(L, -1, Names::positionSteps))
 		{
@@ -609,8 +611,8 @@ bool LuaLoader::load(const char *filename, State &state, const nc::EmscriptenLoc
 				nc::LuaUtils::pop(L);
 				s.positionSteps.pushBack(step);
 			}
+			nc::LuaUtils::pop(L);
 		}
-		nc::LuaUtils::pop(L);
 
 		if (nc::LuaUtils::tryRetrieveFieldTable(L, -1, Names::velocitySteps))
 		{
@@ -631,8 +633,8 @@ bool LuaLoader::load(const char *filename, State &state, const nc::EmscriptenLoc
 				nc::LuaUtils::pop(L);
 				s.velocitySteps.pushBack(step);
 			}
+			nc::LuaUtils::pop(L);
 		}
-		nc::LuaUtils::pop(L);
 
 		nc::LuaUtils::retrieveFieldTable(L, -1, Names::emission);
 		s.init.rndAmount = nc::LuaVector2iUtils::retrieveArrayField(L, -1, Names::amount);
